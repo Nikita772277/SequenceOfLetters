@@ -1,131 +1,159 @@
-﻿/*Console.WriteLine("Введите текст");
-string l = Console.ReadLine();
-char[] c = l.ToCharArray();
-int MaxCount = 0;
-int currentcount = 0;
-int coun=0;
-char[] max= new char[59];
-foreach (char c2 in c)
-{
-    if (char.IsLetter(c2))
-    {
-        
-        currentcount++;
-        if (MaxCount <= currentcount)
-        {
-            MaxCount = currentcount;
-            
-            max[coun] = c2;
-        }
-        else if(MaxCount > currentcount)
-        {
-            MaxCount = MaxCount;
-
-        }       
-    }
-    if (MaxCount > coun)
-    {
-        coun++;
-    }
-    else if (char.IsLetter(c2) == false)
-    {
-        currentcount = 0;
-        continue;
-    }
-}
-foreach(char c3 in max)
-        {
-            Console.WriteLine(c3);
-        }
-Console.WriteLine($"максимальная последовательность букв идущих подряд - {MaxCount}");
-*/
-
-
-
-
-
-
-
-
-
+﻿bool check = false;
 Console.WriteLine("Введите текст");
 string l = Console.ReadLine();
 char[] c = l.ToCharArray();
 int MaxCount = 0;
 int currentcount = 0;
 int coun = 0;
-void GetQuantity()
+bool checktext = false;
+if (l == "" || l == " ")
 {
+    checktext = false;
+}
+else
+{
+    checktext = true;
+}
 
-
-    foreach (char c2 in c)
+while (true)
+{
+    if (check == true)
     {
-        if (char.IsLetter(c2))
+        Console.WriteLine();
+        Console.WriteLine("Введите текст");
+        Console.WriteLine();
+        l = Console.ReadLine();
+        c = l.ToCharArray();
+        MaxCount = 0;
+        currentcount = 0;
+        coun = 0;
+        checktext = false;
+        if (l == "" || l == " ")
         {
-
-            currentcount++;
-            if (MaxCount <= currentcount)
-            {
-                MaxCount = currentcount;
-
-
-            }
-            else if (MaxCount > currentcount)
-            {
-                MaxCount = MaxCount;
-
-            }
+            checktext = false;
         }
-
-        else if (char.IsLetter(c2) == false)
+        else
         {
-            currentcount = 0;
-            continue;
+            checktext = true;
         }
     }
-    Console.WriteLine($"максимальная последовательность букв идущих подряд - {MaxCount}");
+    GetQuantity();
+    GetWord();
+    check = true;
+}
+void GetQuantity()
+{
+    if (checktext == true)
+    {
+
+        foreach (char c2 in c)
+        {
+            if (char.IsLetter(c2))
+            {
+
+                currentcount++;
+                if (MaxCount <= currentcount)
+                {
+                    MaxCount = currentcount;
+
+
+                }
+                else if (MaxCount > currentcount)
+                {
+                    MaxCount = MaxCount;
+
+                }
+            }
+
+            else if (char.IsLetter(c2) == false)
+            {
+                currentcount = 0;
+                continue;
+            }
+
+        }
+
+
+        if (checktext == false)
+        {
+            Console.WriteLine("Вы не ввели текст");
+            Console.WriteLine();
+        }
+        else
+        {
+            if (MaxCount != 0)
+            {
+                Console.WriteLine($"Максимальная последовательность букв идущих подряд - {MaxCount}");
+            }
+            else if (MaxCount == 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Вы не ввели букв");
+                Console.WriteLine();
+            }
+        }
+    }
 }
 void GetWord()//самое длинное слово
 {
-    char[] max = new char[MaxCount];
-
-    foreach (char c2 in c)
+    if (checktext == true)
     {
-        if (char.IsLetter(c2))
+        if (MaxCount != 0)
         {
-            max[coun] = c2;
-            if (MaxCount > coun)
+
+            char[] max = new char[MaxCount];
+
+            foreach (char c2 in c)
             {
-                coun++;
+                if (char.IsLetter(c2))
+                {
+                    max[coun] = c2;
+                    if (MaxCount > coun)
+                    {
+                        coun++;
+                    }
+                }
+
+                else if (char.IsLetter(c2) == false)
+                {
+                    if (coun != MaxCount)
+                    {
+                        Array.Clear(max);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    coun = 0;
+                    continue;
+                }
+
+
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Первая буква слова: {max[0]}");
+            Console.WriteLine();
+            Console.Write("Самая длянная последовательность букв: ");
+            foreach (char c3 in max)
+            {
+
+                Console.Write(c3);
+
             }
         }
-
-        else if (char.IsLetter(c2) == false)
+        else 
         {
-            if (coun != MaxCount)
-            {
-                Array.Clear(max);
-            }
-            else
-            {
-                break;
-            }
-            coun = 0;
-            continue;
+            
         }
-
-
+        Console.WriteLine();
     }
-    Console.WriteLine();
-Console.WriteLine($"Первая буква слова: {max[0]}");
-    Console.WriteLine();
-    foreach (char c3 in max)
+    else if (checktext == false)
     {
-        Console.Write(c3);
-       
+        Console.WriteLine("Вы не ввели текст");
+        Console.WriteLine();
     }
-    Console.WriteLine();
-
+    else
+    {
+        Console.WriteLine("Непредусмотренная ошибка");
+    }
 }
-GetQuantity();
-GetWord();
